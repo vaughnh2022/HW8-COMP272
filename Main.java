@@ -192,7 +192,7 @@ public class Main {
 
     if ( ! numGroupsFail && ps.numGroups(adjMatrix1) != 2 ) {   // should be 2
       numGroupsFail = true;
-      System.out.println("Number of Groups error 1");
+      System.out.println("Number of Groups error 1 "+ ps.numGroups(adjMatrix1));
     }
 
     if ( ! numGroupsFail && ps.numGroups(adjMatrix2) != 3 ) {   // should be 3

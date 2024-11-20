@@ -1,6 +1,6 @@
 /******************************************************************
  *
- *   ADD YOUR NAME / SECTION NUMBER HERE
+ *   Vaughn Hartzell 001
  *
  *   This java file contains the problem solutions of canFinish and
  *   numGroups methods.
@@ -72,18 +72,22 @@ class ProblemSolutions {
      * @return boolean          - True if all exams can be taken, else false.
      */
 
-    public boolean canFinish(int numExams, 
-                             int[][] prerequisites) {
-      
-        int numNodes = numExams;  // # of nodes in graph
-
-        // Build directed graph's adjacency list
-        ArrayList<Integer>[] adj = getAdjList(numExams, 
-                                        prerequisites); 
-
-        // ADD YOUR CODE HERE - ADD YOUR NAME / SECTION AT TOP OF FILE
-        return false;
-
+    public boolean canFinish(int numExams, int[][] prerequisites) {
+        //ArrayList<Integer>[] adj = getAdjList(numExams, prerequisites);
+        HashMap<Integer,Integer> map = getAdjList(numExams, prerequisites);
+        for(int a=0;a<numExams;a++){
+            int x=a;
+            HashSet<Integer> trav = new HashSet<>();
+            while(map.containsKey(x)){
+                    if(trav.contains(x)){
+                        return false;
+                    }
+                    trav.add(x);
+                    x=map.get(x);
+            }
+            trav.clear();
+        }
+        return true;
     }
 
 
@@ -97,7 +101,16 @@ class ProblemSolutions {
      * @param edges         - 2-dim array of directed edges
      * @return ArrayList<Integer>[]  - An adjacency list representing the provided graph.
      */
+    private HashMap<Integer,Integer> getAdjList(int numNodes,int[][] edges){
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int[] edge : edges){
+            map.put(edge[0],edge[1]);
+        }
+        return map;
+    }
 
+    //updated AdjList to turn it into a hashmap for better countrol
+    /* 
     private ArrayList<Integer>[] getAdjList(
             int numNodes, int[][] edges) {
 
@@ -112,7 +125,7 @@ class ProblemSolutions {
         }
         return adj;
     }
-
+    */
 
     /*
      * Assignment Graphing - Number of groups.
@@ -189,10 +202,31 @@ class ProblemSolutions {
                 }
             }
         }
-
         // YOUR CODE GOES HERE - you can add helper methods, you do not need
         // to put all code in this method.
-        return -1;
+        return numGroupsTwo(graph,adjMatrix.length);
+    }
+    public static int numGroupsTwo(Map<Integer,List<Integer>> graph,int len){
+        HashSet<Integer> set = new HashSet<>();
+        int ans=0;
+        for(int a=0;a<len;a++){
+            if(!set.contains(a)){
+                ans++;
+                recur(graph,set,a);
+            }
+        }
+        return ans;
+    }
+    public static void recur(Map<Integer,List<Integer>> graph,HashSet<Integer> set,int loc){
+        if(set.contains(loc)){
+            return;
+        }
+        set.add(loc);
+        if(graph.containsKey(loc)){
+            for(int a : graph.get(loc)){
+                recur(graph,set,a);
+            }
+        }
     }
 
 }

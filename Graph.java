@@ -1,6 +1,6 @@
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *    Vaughn Hartzel 001
  *
  *   Note, additional comments provided throughout this source code
  *   is for educational purposes
@@ -8,6 +8,7 @@
  ********************************************************************/
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -103,8 +104,22 @@ public class Graph {
    */
   
   public int findRoot() {
-
-    // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME/SECTION AT TOP OF FILE
-    return -1;
+    List<Integer> ans = new ArrayList<>();
+    HashSet<Integer> set = new HashSet<>();
+    for(int a=0;a<adjListArr.length;a++){
+      LinkedList<Integer> head = adjListArr[a];
+      for(Integer b : head){
+        set.add(b);
+      }
+    }
+    for(int c=0;c<vertexValues.size();c++){
+      if(!set.contains(c)){
+        ans.add(vertexValues.get(c));
+      }
+    }
+    if(ans.size()!=1){
+      return -1;
+    }
+    return ans.get(0);
   } 
 }
